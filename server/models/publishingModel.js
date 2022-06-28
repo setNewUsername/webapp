@@ -6,20 +6,12 @@ const PublishingType = sequelize.define("publishing_type", {
     name: {type: DataTypes.STRING, allowNull: false},
 })
 
-const PublishingCharacteristicsAssoc = sequelize.define("publishing_characteristics_assoc", {
+const PublishingTypeName = sequelize.define("publishing_type_name", {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    description: {type: DataTypes.STRING, allowNull: false}
+    name: {type: DataTypes.STRING, allowNull: false, validate: {isIn: [['collection', 'box', 'key']]}},
 })
 
-const PublishingTypeCharacteristics = sequelize.define("publishing_type_characteristics", {
-    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    name: {type: DataTypes.STRING, allowNull: false},
-})
+PublishingTypeName.hasMany(PublishingType)
+PublishingType.belongsTo(PublishingTypeName)
 
-PublishingTypeCharacteristics.hasMany(PublishingCharacteristicsAssoc)
-PublishingCharacteristicsAssoc.belongsTo(PublishingTypeCharacteristics)
-
-PublishingType.hasMany(PublishingCharacteristicsAssoc)
-PublishingCharacteristicsAssoc.belongsTo(PublishingType)
-
-module.exports = { PublishingType, PublishingTypeCharacteristics, PublishingCharacteristicsAssoc }
+module.exports = { PublishingType, PublishingTypeName }
