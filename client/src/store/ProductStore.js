@@ -1,6 +1,6 @@
 import {makeAutoObservable} from "mobx";
 
-export default class DeviceStore {
+export default class ProductStore {
     constructor() {
         this._types = [
             {id: 1, name: 'RPG'},
@@ -13,9 +13,9 @@ export default class DeviceStore {
             {id:3, name: 'Valve'},
         ]
         this._games = [
-            {id: 1, name: 'WOW', description: 'WOW desc', img: `https://via.placeholder.com/728x90.png?text=${name}`, price: 2000},
-            {id: 2, name: 'WOW2', description: 'WOW desc', img: `https://via.placeholder.com/728x90.png?text=${name}`, price: 2000},
-            {id: 3, name: 'WOW3', description: 'WOW desc', img: `https://via.placeholder.com/728x90.png?text=${name}`, price: 2000},
+            {id: 1, name: 'WOW', description: 'WOW desc', img: `https://via.placeholder.com/728x90.png?text=Wow`, price: 2000},
+            {id: 2, name: 'WOW2', description: 'WOW desc', img: `https://via.placeholder.com/728x90.png?text=wow`, price: 2000},
+            {id: 3, name: 'WOW3', description: 'WOW desc', img: `https://via.placeholder.com/728x90.png?text=wow`, price: 2000},
         ]
         makeAutoObservable(this);
     }
