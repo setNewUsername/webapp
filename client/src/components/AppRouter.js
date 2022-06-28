@@ -1,17 +1,22 @@
 import React from 'react';
-import {Switch, Route, Redirect} from "react-router-dom";
-import {authRoutes} from "../routes";
+import {Routes, Route} from "react-router-dom";
+import {authRoutes, publicRoutes} from "../routes";
+import NotFound from "../page/NotFound";
 
 const AppRouter = () => {
 
-    const isAuth = false;
+    const isAuth = true;
 
     return (
-        <Switch>
-            {authRoutes.map(({path, Component}) =>
-                <Route path={path} component={Component} />
+        <Routes>
+            {isAuth && authRoutes.map(({path, Component}) => (
+                <Route key={path} path={path} element={<Component />} />
+            ))}
+            {publicRoutes.map(({path, Component}) =>
+                <Route key={path} path={path} element={<Component />} />
             )}
-        </Switch>
+            <Route path="*" element={<NotFound />}/>
+        </Routes>
     );
 };
 

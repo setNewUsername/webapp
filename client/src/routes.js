@@ -13,10 +13,13 @@ export const authRoutes = [
     {
         path: CART_ROUTE,
         Component: ShoppingCart,
-    },
+    }
+]
+
+export const publicRoutes = [
     {
-        path: REGISTRATION_ROUTE,
-        Component: Auth,
+        path: SHOP_ROUTE,
+        Component: Shop,
     },
     {
         path: LOGIN_ROUTE,
@@ -27,11 +30,8 @@ export const authRoutes = [
         Component: ProductPage,
     },
     {
-        path: SHOP_ROUTE,
-        Component: Shop,
+        path: REGISTRATION_ROUTE,
+        Component: Auth,
     }
-]
 
-export const publicRoutes = [
-    {}
 ]
