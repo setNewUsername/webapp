@@ -9,4 +9,7 @@ const BasketAssoc = sequelize.define("basket_assoc", {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
 })
 
-module.exports = BasketAssoc, Basket
+Basket.hasMany(BasketAssoc)
+BasketAssoc.belongsTo(Basket)
+
+module.exports = { BasketAssoc, Basket }

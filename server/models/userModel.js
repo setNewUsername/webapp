@@ -8,4 +8,4 @@ const User = sequelize.define("user", {
     access_rights: {type: DataTypes.STRING, defaultValue: "USER"},
 })
 
-module.exports = User
+module.exports = { User }

@@ -6,4 +6,4 @@ const ProductPublisher = sequelize.define("product_publisher", {
     name: {type: DataTypes.STRING, allowNull: false},
 })
 
-module.exports = ProductPublisher
+module.exports = { ProductPublisher }

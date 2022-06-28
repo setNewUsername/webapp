@@ -19,4 +19,13 @@ const PlatformCharacteristicsAssoc = sequelize.define("platform_char_assoc", {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
 })
 
-module.exports = PlatformAssociation, Platform, PlatformCharacteristics, PlatformCharacteristicsAssoc
+Platform.hasMany(PlatformAssociation)
+PlatformAssociation.belongsTo(Platform)
+
+Platform.hasMany(PlatformCharacteristicsAssoc)
+PlatformCharacteristicsAssoc.belongsTo(Platform)
+
+PlatformCharacteristics.hasMany(PlatformCharacteristicsAssoc)
+PlatformCharacteristicsAssoc.belongsTo(PlatformCharacteristics)
+
+module.exports = { PlatformAssociation, Platform, PlatformCharacteristics, PlatformCharacteristicsAssoc }

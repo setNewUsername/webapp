@@ -10,4 +10,7 @@ const Language = sequelize.define("language",{
     name: {type: DataTypes.STRING, allowNull: false},
 })
 
-module.exports = LanguageAssociation, Language
+Language.hasMany(LanguageAssociation)
+LanguageAssociation.belongsTo(Language)
+
+module.exports = { LanguageAssociation, Language }

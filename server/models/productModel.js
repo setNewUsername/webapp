@@ -9,14 +9,4 @@ const Product = sequelize.define("product", {
     image: {type: DataTypes.STRING, allowNull: false},
 })
 
-const ProductSystemCharactDescription = sequelize.define("product_sys_char_desc", {
-    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    minimal_characteristics: {type: DataTypes.STRING, allowNull: false},
-    recommended_characteristics: {type: DataTypes.STRING, allowNull: false},
-})
-
-const ProductSystemRequirements = sequelize.define("product_system_requirements", {
-    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-})
-
-module.exports = Product, ProductSystemCharactDescription, ProductSystemRequirements
+module.exports = { Product }

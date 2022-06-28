@@ -6,4 +6,4 @@ const ProductGenre = sequelize.define("product_genre", {
     name: {type: DataTypes.STRING, allowNull: false},
 })
 
-module.exports = ProductGenre
+module.exports = { ProductGenre }

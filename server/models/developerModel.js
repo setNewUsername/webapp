@@ -6,4 +6,4 @@ const ProductDeveloper = sequelize.define("product_developer", {
     name: {type: DataTypes.STRING, allowNull: false},
 })
 
-module.exports = ProductDeveloper
+module.exports = { ProductDeveloper }
