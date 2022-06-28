@@ -12,6 +12,6 @@ router.get("/:id", LanguageController.Get)
 router.post("/", LanguageController.Add)
 
 //delete language by id
-router.delete("/:id", LanguageController.delete)
+router.delete("/:id", LanguageController.Delete)
 
 module.exports = router

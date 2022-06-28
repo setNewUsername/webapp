@@ -7,12 +7,12 @@ const PlatformAssociation = sequelize.define("platform_association", {
 
 const Platform = sequelize.define("platform",{
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    name: {type: DataTypes.STRING, allowNull: false},
+    name: {type: DataTypes.STRING, allowNull: false, unique: true},
 })
 
 const PlatformCharacteristics = sequelize.define("platform_characteristics", {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    name: {type: DataTypes.STRING, allowNull: false},
+    name: {type: DataTypes.STRING, allowNull: false, unique: true},
 })
 
 const PlatformCharacteristicsAssoc = sequelize.define("platform_char_assoc", {

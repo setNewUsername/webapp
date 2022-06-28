@@ -3,9 +3,10 @@ require("dotenv").config()
 //importing modules
 const express = require("express")
 const sequelize = require("./dbConnection")
-const models = require("./models/models")
+//const models = require("./models/models")
 const cors = require("cors")
 const router = require('./routes/index')
+const errorHandler = require('./middleware/errorHandlerMW')
 //importing modules
 
 //env
@@ -17,13 +18,11 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 app.use('/api', router)
-
-app.get("/", (req, res) =>
-{
-res.status(200).json({ message: "working" })
-})
-
 //app creation and base routing
+
+//error handling
+app.use(errorHandler)
+//error handling
 
 const start = async () => {
     try{

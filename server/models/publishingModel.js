@@ -3,7 +3,7 @@ const {DataTypes} = require("sequelize")
 
 const PublishingType = sequelize.define("publishing_type", {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    name: {type: DataTypes.STRING, allowNull: false},
+    name: {type: DataTypes.STRING, allowNull: false, unique: true},
 })
 
 const PublishingTypeName = sequelize.define("publishing_type_name", {
