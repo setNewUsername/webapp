@@ -28,5 +28,19 @@ module.exports = {
 
             Models.User.User.create(email, password, access_rights);
         }
+
+        platform_characteristics = ['gpu', 'cpu', 'monitor_width', 'monitor_height', 'disk_space', 'ram']
+
+        for(let i = 0; i < platform_characteristics.length; i++)
+        {
+            Models.Platform.PlatformCharacteristics.create(platform_characteristics[i])
+        }
+
+        publiching_types = ['key', 'box', 'collection']
+
+        for(let i = 0; i < publiching_types.length; i++)
+        {
+            Models.Publishing.PublishingTypeName.create(publiching_types[i])
+        }
     }
 }

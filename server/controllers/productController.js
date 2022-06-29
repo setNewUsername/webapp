@@ -3,6 +3,7 @@ const ApiError = require("../error/apiError")
 const Uuid = require("uuid")
 const Path = require("path")
 const LangAssocCont = require("./assocContrllers/languageAssocCont")
+const SysReq = require("./assocContrllers/platformCharacteristicsCont")
 
 const {Language} = require("../models/models")
 
@@ -24,15 +25,15 @@ class ProductController{
                 }
             })
 
-            const ProductLanguages = await Language.LanguageAssociation.findAll({
-                where: {
-                    productId: idToFind
-                }
-            })
+            //console.log(await SysReq.GetListByProductId(idToFind))
 
-            console.log(JSON.parse(JSON.stringify(ProductLanguages)))
+            let Response = JSON.parse(JSON.stringify(product))
 
-            return res.json(product)
+            Response[0].languages = await LangAssocCont.GetLanguageNamesByProductId(idToFind)
+            Response[0].platforms = await PlatformAssocCont.GetNamesByProductId(idToFind)
+            Response[0].publishingtypes =  await PublishingAssocCont.GetNamesByProductId(idToFind)
+
+            return res.json(Response)
         }
         else
         {
