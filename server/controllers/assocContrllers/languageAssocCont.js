@@ -1,19 +1,28 @@
-const LanguageAssoc = require("../../models/languageModel")
 const {Language} = require("../../models/models")
-const {Platform} = require("../../models/models")
 
 class LangAssocCont{
     async AddAssociations(productId, productLanguages) {
         try{
-            let platformId = 1
+            let languageId = 1
             let productId = 1
-            Platform.PlatformAssociation.create(platformId, productId)
-            //Language.LanguageAssociation.drop()
+
+            Language.LanguageAssociation.create(languageId, productId)
+            //LanguageAssociation.drop()
         }
         catch(e)
         {
             console.log(e.message)
         }
+    }
+    GetAssociationsByPorductId(productIdToGet){
+
+        const ProductLanguages = Language.LanguageAssociation.findAll({
+            where: {
+                productId: productIdToGet
+            }
+        })
+
+        return ProductLanguages
     }
 }
 

@@ -7,7 +7,7 @@ const LanguageAssociation = sequelize.define("language_association", {
 
 const Language = sequelize.define("language",{
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    name: {type: DataTypes.STRING, allowNull: false},
+    name: {type: DataTypes.STRING, allowNull: false, unique: true},
 })
 
 Language.hasMany(LanguageAssociation)

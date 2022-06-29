@@ -4,6 +4,8 @@ const Uuid = require("uuid")
 const Path = require("path")
 const LangAssocCont = require("./assocContrllers/languageAssocCont")
 
+const {Language} = require("../models/models")
+
 class ProductController{
     //called by GET request; URL: api/product/
     async GetAll(req, res,){
@@ -16,12 +18,21 @@ class ProductController{
         const idToFind = req.params.id
 
         if(!Number.isNaN(Number(idToFind))){
-            const Product = await Product.Product.findAll({
+            const product = await Product.Product.findAll({
                 where: {
                     id: idToFind
                 }
             })
-            return res.json(Product)
+
+            const ProductLanguages = await Language.LanguageAssociation.findAll({
+                where: {
+                    productId: idToFind
+                }
+            })
+
+            console.log(JSON.parse(JSON.stringify(ProductLanguages)))
+
+            return res.json(product)
         }
         else
         {
