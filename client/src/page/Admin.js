@@ -1,11 +1,13 @@
 import React from 'react';
+import {Container} from "react-bootstrap";
+import {observer} from "mobx-react-lite";
 
-const Admin = () => {
+const Admin = observer(() => {
     return (
-        <div>
-            ADMIN
-        </div>
+        <Container>
+admin
+        </Container>
     );
-};
+});
 
 export default Admin;

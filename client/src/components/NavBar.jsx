@@ -1,14 +1,16 @@
 import React, {useContext} from 'react';
 import {Context} from "../index";
 import {Container, Nav, Navbar} from "react-bootstrap";
-import {ADMIN_ROUTE, SHOP_ROUTE} from "../utils/consts";
+import {ADMIN_ROUTE, LOGIN_ROUTE, PRODUCT_ROUTE, SHOP_ROUTE} from "../utils/consts";
 import {observer} from "mobx-react-lite";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import style from './NavBar.module.css';
 
 
 const NavBar = observer(() => {
     const {user} = useContext(Context)
+
+    const navigate = useNavigate();
     return (
         <Navbar bg="dark" variant="dark">
             <Container>
@@ -26,13 +28,35 @@ const NavBar = observer(() => {
                 </NavLink>
                 {user.isAuth
                     ? <Nav className="ml-auto">
-                        <Nav.Link href={SHOP_ROUTE}>Магазин</Nav.Link>
-                        <Nav.Link href={ADMIN_ROUTE}>Админ панель</Nav.Link>
-                        <Nav.Link onClick={() => user.setIsAuth(false)}>Выйти</Nav.Link>
+                        <Nav.Link
+                            onClick={() => navigate(SHOP_ROUTE, {replace: true})}
+                            active={false}>
+                            Магазин
+                        </Nav.Link>
+                        <Nav.Link
+                            onClick={() => navigate(ADMIN_ROUTE, {replace: true})}
+                            active={false}>
+                            Админ панель
+                        </Nav.Link>
+                        <Nav.Link
+                            onClick={() => navigate(LOGIN_ROUTE, {replace: true})}
+                            active={false}>
+                            Выйти
+                        </Nav.Link>
+                        <Nav.Link onClick={() => user.setIsAuth(false)}>Выйти*</Nav.Link>
                     </Nav>
                     : <Nav className="ml-auto">
-                        <Nav.Link href={SHOP_ROUTE}>Магазин</Nav.Link>
-                        <Nav.Link onClick={() => user.setIsAuth(true)}>Авторизация</Nav.Link>
+                        <Nav.Link
+                            onClick={() => navigate(SHOP_ROUTE, {replace: true})}
+                            active={false}>
+                            Магазин
+                        </Nav.Link>
+                        <Nav.Link
+                            onClick={() => navigate(LOGIN_ROUTE, {replace: true})}
+                            active={false}>
+                            Авторизация
+                        </Nav.Link>
+                        <Nav.Link onClick={() => user.setIsAuth(true)}>Авторизация*</Nav.Link>
                     </Nav>
                 }
             </Container>

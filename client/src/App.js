@@ -2,8 +2,9 @@ import {BrowserRouter} from "react-router-dom";
 import AppRouter from "./components/AppRouter";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
+import {observer} from "mobx-react-lite";
 
-function App() {
+const App = observer(() => {
   return (
     <div className="App">
         <BrowserRouter>
@@ -13,6 +14,6 @@ function App() {
         </BrowserRouter>
     </div>
   );
-}
+});
 
 export default App;
