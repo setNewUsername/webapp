@@ -89,7 +89,7 @@ const CreateProduct = ({show, onHide}) => {
                             </div>
                             <div className='mb-4'>
                                 <Form.Select multiple aria-label="Default select example">
-                                    <option>Выберите языки</option>
+                                    <option>Выберите язык</option>
                                     <option value="1">One</option>
                                     <option value="2">Two</option>
                                     <option value="3">Three</option>
