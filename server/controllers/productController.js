@@ -30,7 +30,7 @@ class ProductController{
                 }
             })
 
-            console.log(JSON.parse(JSON.stringify(ProductLanguages)))
+            console.log(JSON.parse(JSON.stringify(ProductLanguages))[0])
 
             return res.json(product)
         }
