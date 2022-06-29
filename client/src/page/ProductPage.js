@@ -12,13 +12,12 @@ const ProductPage = () => {
         img: `https://www.gamebuy.ru/sites/default/files/imagecache/game_cover/files/mortal-kombat-11-ultimate-ps4_playstation-4_cover.jpg`,
         price: 2000,
         youtube: '5qap5aO4i9A',
+        systemCharacteristics: [
+            {id: 1, title: 'Операционная система', description: 'Windows'},
+            {id: 2, title: 'Оперативная память', description: '10'},
+            {id: 3, title: 'Процессор', description: 'm1'},
+        ]
     }
-
-    const systemCharacteristics = [
-        {id: 1, title: 'Операционная система', description: 'Windows'},
-        {id: 2, title: 'Оперативная память', description: '10'},
-        {id: 3, title: 'Процессор', description: 'm1'},
-    ]
 
     return (
         <Container>
@@ -66,7 +65,7 @@ const ProductPage = () => {
                         <div>
                             <Table striped bordered hover>
                                 <tbody>
-                                {systemCharacteristics.map(info =>
+                                {product.systemCharacteristics.map(info =>
                                     <tr key={info.id}>
                                         <td>{info.title}</td>
                                         <td>{info.description}</td>
