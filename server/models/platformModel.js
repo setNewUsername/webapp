@@ -12,7 +12,4 @@ const PlatformSystemRequirements = sequelize.define("platform_system_requirement
     recommended_char: {type: DataTypes.STRING}
 })
 
-PlatformCharacteristics.hasMany(PlatformSystemRequirements)
-PlatformSystemRequirements.belongsTo(PlatformCharacteristics)
-
 module.exports = { PlatformCharacteristics, PlatformSystemRequirements }

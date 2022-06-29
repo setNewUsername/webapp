@@ -6,7 +6,7 @@ const Product = sequelize.define("product", {
     name: {type: DataTypes.STRING, unique: true, allowNull: false},
     multiplayer: {type: DataTypes.BOOLEAN, allowNull: false},
     price: {type: DataTypes.INTEGER, allowNull: false},
-    ampunt: {type: DataTypes.INTEGER, allowNull: false},
+    amount: {type: DataTypes.INTEGER, allowNull: false},
     youtube: {type: DataTypes.STRING},
     image: {type: DataTypes.STRING, allowNull: false},
 })

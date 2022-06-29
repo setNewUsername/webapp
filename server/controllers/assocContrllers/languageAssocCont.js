@@ -3,11 +3,11 @@ const {Language} = require("../../models/models")
 class LangAssocCont{
     async AddAssociations(productId, productLanguages) {
         try{
-            let languageId = 1
-            let productId = 1
-
-            Language.LanguageAssociation.create(languageId, productId)
-            //LanguageAssociation.drop()
+            console.log(productLanguages[1])
+            productLanguages.forEach(language => {
+                let languageId = language['id']
+                Language.LanguageAssociation.create({languageId, productId})
+            });
         }
         catch(e)
         {

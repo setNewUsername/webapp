@@ -25,14 +25,12 @@ class ProductController{
                 }
             })
 
-            //console.log(await SysReq.GetListByProductId(idToFind))
-
             let Response = JSON.parse(JSON.stringify(product))
 
             Response[0].languages = await LangAssocCont.GetLanguageNamesByProductId(idToFind)
-            Response[0].platforms = await PlatformAssocCont.GetNamesByProductId(idToFind)
-            Response[0].publishingtypes =  await PublishingAssocCont.GetNamesByProductId(idToFind)
 
+            Response[0].systemRequrements = await SysReq.GetSystemRequirementsByProductId(idToFind)
+            
             return res.json(Response)
         }
         else
@@ -44,21 +42,20 @@ class ProductController{
     //called by POST request; URL: api/product/; form-data: {name, multiplayer, price, productGenreId, productDeveloperId, productPublisherId, image(as file)}
     async Add(req, res, next){
         try{
-            const {name, multiplayer, price, productGenreId, productDeveloperId, productPublisherId, languages} = req.body
+            const {name, multiplayer, price, productGenreId, productDeveloperId, productPublisherId, languages, amount, youtube, systemRequrements} = req.body
 
-            console.log("----------------------------", JSON.parse(languages))
-
-            LangAssocCont.AddAssociations(1, JSON.parse(languages))
-
-            /*console.log(name, multiplayer, price, productGenreId, productDeveloperId, productPublisherId)
+            console.log(name, multiplayer, price, productGenreId, productDeveloperId, productPublisherId, languages, amount, youtube, JSON.parse(systemRequrements))
 
             const {image} = req.files
             const FileName = Uuid.v4() + ".jpg"
             image.mv(Path.resolve(__dirname, "..", "static", FileName))
 
-            const NewProduct = await Product.Product.create({name, multiplayer, price, image:FileName, productGenreId, productDeveloperId, productPublisherId})
+            const NewProduct = await Product.Product.create({name, multiplayer, price, image:FileName, productGenreId, productDeveloperId, productPublisherId, amount, youtube})
 
-            return res.json(NewProduct)*/
+            LangAssocCont.AddAssociations(NewProduct.id, JSON.parse(languages))
+            SysReq.AddSystemRequrements(NewProduct.id, JSON.parse(systemRequrements))
+
+            return res.json(NewProduct)
         }
         catch(e)
         {
