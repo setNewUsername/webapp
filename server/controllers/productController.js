@@ -34,10 +34,12 @@ class ProductController{
         try{
             const {name, multiplayer, price, productGenreId, productDeveloperId, productPublisherId, languages} = req.body
 
+            console.log("----------------------------", JSON.parse(languages))
+
             LangAssocCont.AddLangAssociations(1, JSON.parse(languages))
 
-            console.log(name, multiplayer, price, productGenreId, productDeveloperId, productPublisherId)
-/*
+            /*console.log(name, multiplayer, price, productGenreId, productDeveloperId, productPublisherId)
+
             const {image} = req.files
             const FileName = Uuid.v4() + ".jpg"
             image.mv(Path.resolve(__dirname, "..", "static", FileName))

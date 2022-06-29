@@ -45,6 +45,10 @@ Language.LanguageAssociation.belongsTo(Product.Product)
 Platform.PlatformCharacteristicsAssoc.hasMany(SystemReq.ProductSystemCharactDescription)
 SystemReq.ProductSystemCharactDescription.belongsTo(Platform.PlatformCharacteristicsAssoc)
 
+//platform assoc relation to product
+Product.Product.hasMany(Platform.PlatformAssociation)
+Platform.PlatformAssociation.belongsTo(Product.Product)
+
 //system requirements relation to platform characteristics
 Platform.PlatformCharacteristicsAssoc.hasMany(SystemReq.ProductSystemCharactDescription)
 SystemReq.ProductSystemCharactDescription.belongsTo(Platform.PlatformCharacteristicsAssoc)

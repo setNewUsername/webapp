@@ -1,13 +1,17 @@
 const {Language} = require("../../models/models")
+//const {Platform} = require("../../models/models")
 
-class LangAssocCont{for
+class LangAssocCont{
     async AddLangAssociations(productId, productLanguages) {
-        productLanguages.forEach(lang => {
-            console.log(lang.id)
-            let languageId = lang.id
+        try{
+            let languageId = 1
+            let productId = 1
             Language.LanguageAssociation.create(languageId, productId)
-        });   
-           
+        }
+        catch(e)
+        {
+            console.log(e.message)
+        }
     }
 }
 
