@@ -1,12 +1,14 @@
+const LanguageAssoc = require("../../models/languageModel")
 const {Language} = require("../../models/models")
-//const {Platform} = require("../../models/models")
+const {Platform} = require("../../models/models")
 
 class LangAssocCont{
-    async AddLangAssociations(productId, productLanguages) {
+    async AddAssociations(productId, productLanguages) {
         try{
-            let languageId = 1
+            let platformId = 1
             let productId = 1
-            Language.LanguageAssociation.create(languageId, productId)
+            Platform.PlatformAssociation.create(platformId, productId)
+            //Language.LanguageAssociation.drop()
         }
         catch(e)
         {

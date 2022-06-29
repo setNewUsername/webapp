@@ -36,7 +36,7 @@ class ProductController{
 
             console.log("----------------------------", JSON.parse(languages))
 
-            LangAssocCont.AddLangAssociations(1, JSON.parse(languages))
+            LangAssocCont.AddAssociations(1, JSON.parse(languages))
 
             /*console.log(name, multiplayer, price, productGenreId, productDeveloperId, productPublisherId)
 

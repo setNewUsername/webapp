@@ -37,7 +37,7 @@ Product.Product.belongsTo(Publisher.ProductPublisher)
 Product.Product.hasMany(Publishing.PublishingType)
 Publishing.PublishingType.belongsTo(Product.Product)
 
-//language relation to product
+//language assoc relation to product
 Product.Product.hasMany(Language.LanguageAssociation)
 Language.LanguageAssociation.belongsTo(Product.Product)
 
