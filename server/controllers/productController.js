@@ -5,13 +5,40 @@ const Path = require("path")
 const LangAssocCont = require("./assocContrllers/languageAssocCont")
 const SysReq = require("./assocContrllers/platformCharacteristicsCont")
 
-const {Language} = require("../models/models")
-
 class ProductController{
     //called by GET request; URL: api/product/
-    async GetAll(req, res,){
-        const Products = await Product.Product.findAll()
-        return res.json(Products)
+    async GetAll(req, res, next){
+        try{
+            let {productGenreId, productDeveloperId, productPublisherId, limit, page} = req.query
+            page = page || 1
+            limit = limit || 5
+
+            let offset = page * limit - limit
+
+            let Response = null
+
+            if(productGenreId){
+                Response = await Product.Product.findAll({where:{productGenreId}, limit, offset})
+            }
+            else if(productDeveloperId)
+            {
+                Response = await Product.Product.findAll({where:{productDeveloperId}, limit, offset})
+            }
+            else if(productPublisherId)
+            {
+                Response = await Product.Product.findAll({where:{productPublisherId}, limit, offset})
+            }
+            else
+            {
+                Response = await Product.Product.findAll({limit, offset})
+            }
+
+            return res.json(Response)
+        }
+        catch(e)
+        {
+            return next(ApiError.BadRequest(e.message))
+        }
     }
 
     //called by GET request; URL: api/product/:id
@@ -28,7 +55,6 @@ class ProductController{
             let Response = JSON.parse(JSON.stringify(product))
 
             Response[0].languages = await LangAssocCont.GetLanguageNamesByProductId(idToFind)
-
             Response[0].systemRequrements = await SysReq.GetSystemRequirementsByProductId(idToFind)
             
             return res.json(Response)

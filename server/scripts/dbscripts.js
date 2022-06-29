@@ -60,7 +60,7 @@ module.exports = {
 
         for(let i = 0; i < 5; i++){
             let name = "test_product_name_" + i
-            let multiplayer = "false"
+            let multiplayer = false
             let price = 1000
             let image = "test_product_image_" + i
             let productGenreId = 1

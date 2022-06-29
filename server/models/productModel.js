@@ -2,7 +2,6 @@ const sequelize = require("../dbConnection")
 const {DataTypes} = require("sequelize")
 
 const Product = sequelize.define("product", {
-    timestamps: false,
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING, unique: true, allowNull: false},
     multiplayer: {type: DataTypes.BOOLEAN, allowNull: false},
