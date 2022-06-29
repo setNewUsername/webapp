@@ -1,12 +1,13 @@
-const ProductModel = require("../models/productModel")
+const {Product} = require("../models/models")
 const ApiError = require("../error/apiError")
 const Uuid = require("uuid")
 const Path = require("path")
+const LangAssocCont = require("./assocContrllers/languageAssocCont")
 
 class ProductController{
     //called by GET request; URL: api/product/
-    async GetAll(req, res){
-        const Products = await ProductModel.Product.findAll()
+    async GetAll(req, res,){
+        const Products = await Product.Product.findAll()
         return res.json(Products)
     }
 
@@ -15,7 +16,7 @@ class ProductController{
         const idToFind = req.params.id
 
         if(!Number.isNaN(Number(idToFind))){
-            const Product = await ProductModel.Product.findAll({
+            const Product = await Product.Product.findAll({
                 where: {
                     id: idToFind
                 }
@@ -28,26 +29,34 @@ class ProductController{
         }
     }
 
-    //called by POST request; URL: api/product/; form-data: {name, multiplayer, price, genreId, developerId, publisherId, image(as file)}
-    async Add(req, res){
-        const {name, multiplayer, price, genreId, developerId, publisherId} = req.body
+    //called by POST request; URL: api/product/; form-data: {name, multiplayer, price, productGenreId, productDeveloperId, productPublisherId, image(as file)}
+    async Add(req, res, next){
+        try{
+            const {name, multiplayer, price, productGenreId, productDeveloperId, productPublisherId, languages} = req.body
 
-        console.log(name, multiplayer, price, genreId, developerId, publisherId)
+            LangAssocCont.AddLangAssociations(1, JSON.parse(languages))
 
-        const {image} = req.files
-        const FileName = Uuid.v4() + ".jpg"
-        image.mv(Path.resolve(__dirname, "..", "static", FileName))
+            console.log(name, multiplayer, price, productGenreId, productDeveloperId, productPublisherId)
+/*
+            const {image} = req.files
+            const FileName = Uuid.v4() + ".jpg"
+            image.mv(Path.resolve(__dirname, "..", "static", FileName))
 
-        const NewProduct = await ProductModel.Product.create({name, multiplayer, price, image:FileName, genreId, developerId, publisherId})
+            const NewProduct = await Product.Product.create({name, multiplayer, price, image:FileName, productGenreId, productDeveloperId, productPublisherId})
 
-        return res.json(NewProduct)
+            return res.json(NewProduct)*/
+        }
+        catch(e)
+        {
+            return next(ApiError.BadRequest(e.message))
+        }
     }
 
     //called by DELETE request; URL: api/product/:id
     async Delete(req, res, next){
         const idToDelete = req.params.id
         if(!Number.isNaN(Number(idToDelete))){
-            const DeletedProduct = await ProductModel.Product.destroy({
+            const DeletedProduct = await Product.Product.destroy({
                 where: {
                     id: idToDelete
                 }

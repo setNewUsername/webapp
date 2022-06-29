@@ -38,8 +38,8 @@ Product.Product.hasMany(Publishing.PublishingType)
 Publishing.PublishingType.belongsTo(Product.Product)
 
 //language relation to product
-Product.Product.hasMany(Language.Language)
-Language.Language.belongsTo(Product.Product)
+Product.Product.hasMany(Language.LanguageAssociation)
+Language.LanguageAssociation.belongsTo(Product.Product)
 
 //platform relation to product
 Platform.PlatformCharacteristicsAssoc.hasMany(SystemReq.ProductSystemCharactDescription)
