@@ -1,21 +1,26 @@
 import React, {useState} from 'react';
-import {Button, Modal} from "react-bootstrap";
+import {Button, Form, Modal} from "react-bootstrap";
 
-const [fullscreen, setFullscreen] = useState(true);
-// const [show, setShow] = useState(false);
-
-const CreateGenre = (show, onHide) => {
+const CreateGenre = ({show, onHide}) => {
     return (
         <Modal show={show}
-               fullscreen={fullscreen}
+               fullscreen={false}
                onHide={onHide}
         >
             <Modal.Header closeButton>
                 <Modal.Title>Добавить новый тип</Modal.Title>
             </Modal.Header>
-            <Modal.Body>Modal body content</Modal.Body>
+            <Modal.Body>
+                Добавление бренда
+                <Form>
+                    <Form.Control
+                        placeholder={"Введите название типа"}
+                    />
+                </Form>
+            </Modal.Body>
             <Modal.Footer>
-                <Button onClick={onHide}></Button>
+                <Button variant={"outline-danger"} onClick={onHide}>Закрыть</Button>
+                <Button variant={'success'} onClick={onHide}>Добавить</Button>
             </Modal.Footer>
         </Modal>
     );
