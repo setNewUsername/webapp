@@ -7,7 +7,7 @@ const Shop = () => {
         <Container>
             <Row>
                 <Col className='mt-3' md={3}>
-                    <Sidebar/>
+                    <Sidebar />
                 </Col>
                 <Col className='mt-3' md={9}>
                     main

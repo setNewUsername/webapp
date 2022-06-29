@@ -4,25 +4,27 @@ import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
 import {ListGroup} from "react-bootstrap";
 
-const GenresBar = observer(() => {
+const BrandsBar = observer(() => {
     const context = useContext(Context);
     const product = context.product;
 
     return (
         <ListGroup>
-            <b>Жанры:</b>
-            {product.genres.map(genre =>
+            <b>Бренды:</b>
+            {product.brands.map(brand =>
                 <ListGroup.Item
                     style={{cursor: "pointer"}}
-                    key={genre.id}
-                    onClick={() => product.setSelectedGenre(genre)}
-                    active={genre.id === product.selectedGenre.id}
+                    key={brand.id}
+                    onClick={() => {
+                        product.setSelectedBrand(brand);
+                    }}
+                    active={brand.id === product.selectedBrand.id}
                 >
-                    {genre.name}
+                    {brand.name}
                 </ListGroup.Item>
             )}
         </ListGroup>
     );
 });
 
-export default GenresBar;
+export default BrandsBar;

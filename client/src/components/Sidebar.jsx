@@ -1,11 +1,15 @@
 import React from 'react';
 import GenresBar from "./SidebarBlocks/GenresBar";
+import BrandsBar from "./SidebarBlocks/BrandsBar";
 
 const Sidebar = () => {
 
     return (
         <div>
-            <GenresBar/>
+            <div className='mb-4'>
+                <GenresBar/>
+            </div>
+            <BrandsBar/>
         </div>
     );
 };
