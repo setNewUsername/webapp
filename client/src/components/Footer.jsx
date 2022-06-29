@@ -7,10 +7,10 @@ import {NavLink} from "react-router-dom";
 import style from './NavBar.module.css';
 
 
-const NavBar = observer(() => {
+const Footer = observer(() => {
     const {user} = useContext(Context)
     return (
-        <Navbar bg="dark" variant="dark">
+        <Navbar bg="dark" variant="dark" className='mt-5'>
             <Container>
                 <NavLink to={SHOP_ROUTE} className={style.logo}>
                     <Navbar.Brand>
@@ -40,4 +40,4 @@ const NavBar = observer(() => {
     );
 });
 
-export default NavBar;
+export default Footer;

@@ -1,6 +1,7 @@
 import React from 'react';
 import {Col, Container, Row} from "react-bootstrap";
 import Sidebar from "../components/Sidebar";
+import ProductList from "../components/ProductList";
 
 const Shop = () => {
     return (
@@ -10,7 +11,7 @@ const Shop = () => {
                     <Sidebar />
                 </Col>
                 <Col className='mt-3' md={9}>
-                    main
+                    <ProductList />
                 </Col>
             </Row>
         </Container>
