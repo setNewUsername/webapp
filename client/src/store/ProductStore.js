@@ -2,9 +2,9 @@ import {makeAutoObservable} from "mobx";
 
 export default class ProductStore {
     constructor() {
-        this._types = [
+        this._genres = [
             {id: 1, name: 'RPG'},
-            {id: 1, name: 'Action'},
+            {id: 2, name: 'Action'},
 
         ]
         this._brand = [
@@ -20,8 +20,8 @@ export default class ProductStore {
         makeAutoObservable(this);
     }
 
-    setTypes(types) {
-        this._types = types;
+    setTypes(genres) {
+        this._genres = genres;
     }
     setBrand(brand) {
         this._brand = brand;
@@ -30,8 +30,8 @@ export default class ProductStore {
         this._games = games;
     }
 
-    get types() {
-        return this._types;
+    get genres() {
+        return this._genres;
     }
     get brand() {
         return this._brand;
