@@ -1,2 +1,3 @@
 #server part
 /server/node_modules
+/server/static

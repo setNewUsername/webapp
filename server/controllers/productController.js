@@ -1,6 +1,7 @@
 const ProductModel = require("../models/productModel")
 const ApiError = require("../error/apiError")
 const Uuid = require("uuid")
+const Path = require("path")
 
 class ProductController{
     //called by GET request; URL: api/product/
@@ -27,13 +28,18 @@ class ProductController{
         }
     }
 
-    //called by POST request; URL: api/product/; body: {:name":"new_name"}
+    //called by POST request; URL: api/product/; form-data: {name, multiplayer, price, genreId, developerId, publisherId, image(as file)}
     async Add(req, res){
-        const {name, publisher, developer, genre, multyplayer} = req.body
-        const {img} = req.files
+        const {name, multiplayer, price, genreId, developerId, publisherId} = req.body
+
+        console.log(name, multiplayer, price, genreId, developerId, publisherId)
+
+        const {image} = req.files
         const FileName = Uuid.v4() + ".jpg"
-        
-        const NewProduct = await ProductModel.Product.create({name})
+        image.mv(Path.resolve(__dirname, "..", "static", FileName))
+
+        const NewProduct = await ProductModel.Product.create({name, multiplayer, price, image:FileName, genreId, developerId, publisherId})
+
         return res.json(NewProduct)
     }
 
