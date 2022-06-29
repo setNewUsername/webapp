@@ -53,6 +53,12 @@ module.exports = {
         }
 
         for(let i = 0; i < 5; i++){
+            productId = 1
+            languageId = i
+            Models.Language.LanguageAssociation.create({productId, languageId});
+        }
+
+        for(let i = 0; i < 5; i++){
             let name = "test_product_name_" + i
             let multiplayer = "false"
             let price = 1000
