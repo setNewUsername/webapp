@@ -4,14 +4,14 @@ import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
 import {ListGroup} from "react-bootstrap";
 
-const BrandsBar = observer(() => {
+const developerBar = observer(() => {
     const context = useContext(Context);
     const product = context.product;
 
     return (
         <ListGroup>
             <b>Бренды:</b>
-            {product.brands.map(brand =>
+            {product.developer.map(brand =>
                 <ListGroup.Item
                     style={{cursor: "pointer"}}
                     key={brand.id}
@@ -27,4 +27,4 @@ const BrandsBar = observer(() => {
     );
 });
 
-export default BrandsBar;
+export default developerBar;

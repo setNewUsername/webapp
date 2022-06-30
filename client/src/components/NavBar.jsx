@@ -9,8 +9,12 @@ import style from './NavBar.module.css';
 
 const NavBar = observer(() => {
     const {user} = useContext(Context)
-
     const navigate = useNavigate();
+    const logOut = () => {
+        user.setUser({});
+        user.setIsAuth(false);
+    }
+
     return (
         <Navbar bg="dark" variant="dark">
             <Container>
@@ -39,11 +43,10 @@ const NavBar = observer(() => {
                             Админ панель
                         </Nav.Link>
                         <Nav.Link
-                            onClick={() => navigate(LOGIN_ROUTE, {replace: true})}
+                            onClick={() => logOut()}
                             active={false}>
                             Выйти
                         </Nav.Link>
-                        <Nav.Link onClick={() => user.setIsAuth(false)}>Выйти*</Nav.Link>
                     </Nav>
                     : <Nav className="ml-auto">
                         <Nav.Link
@@ -56,7 +59,6 @@ const NavBar = observer(() => {
                             active={false}>
                             Авторизация
                         </Nav.Link>
-                        <Nav.Link onClick={() => user.setIsAuth(true)}>Авторизация*</Nav.Link>
                     </Nav>
                 }
             </Container>

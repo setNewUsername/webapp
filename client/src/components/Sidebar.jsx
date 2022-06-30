@@ -1,6 +1,6 @@
 import React from 'react';
 import GenresBar from "./SidebarBlocks/GenresBar";
-import BrandsBar from "./SidebarBlocks/BrandsBar";
+import DeveloperBar from "./SidebarBlocks/DeveloperBar";
 
 const Sidebar = () => {
 
@@ -9,7 +9,9 @@ const Sidebar = () => {
             <div className='mb-4'>
                 <GenresBar/>
             </div>
-            <BrandsBar/>
+            <div className='mb-4'>
+                <DeveloperBar/>
+            </div>
         </div>
     );
 };
