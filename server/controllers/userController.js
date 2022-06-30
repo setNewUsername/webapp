@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const {Basket} = require("../models/models")
 const {Product} = require("../models/models")
-const {Shops} = require("../models/models")
+const {Shop} = require("../models/models")
 const Uuid = require("uuid")
 
 const GenerateGWT = (id, email, role) => {
@@ -135,10 +135,7 @@ class UserController{
             Products.push(product)
         });
 
-        let BuySumm = 0
-
         Promise.all(Products).then(value=>{
-            let Summ = 0
             let ProductsInStock = []
             let UniqueIds = []
 
@@ -153,6 +150,7 @@ class UserController{
                 ProductsInStock[i].id = UniqueIds[i]
                 ProductsInStock[i].amount = 0
                 ProductsInStock[i].price = 0
+                ProductsInStock[i].amount_on_serv = 0
             }
 
             for (let i = 0; i < ProductsInStock.length; i++) {
@@ -163,27 +161,40 @@ class UserController{
                             ProductsInStock[i].amount += 1
                             ProductsInStock[i].price += value[m].price
                         }
+                        ProductsInStock[i].amount_on_serv = value[m].amount
                     }
                 }
             }
 
-            if(()=>{
-                let summ = 0
-                ProductsInStock.forEach(product => {
-                    summ += product.amount * product.price
-                });
-                if(Buyer.balane < summ){
-                    return true
-                }
-            }){
+            let summ = 0
+            ProductsInStock.forEach(product => {
+                summ += product.amount * product.price
+            });
+            console.log(Buyer.balance)
+            console.log(summ)
+            if(Buyer.balance < summ)
+            {
                 return next(ApiError.BadRequest("Not enough maney"))
             }
 
-            console.log(ProductsInStock)
+            ProductsInStock.forEach(product => {
+                for(let i = 0; i < product.amount; i++){
+                    let a_key = Uuid.v4()
+                    Shop.Shops.create({ activation_key:a_key, productId:product.id, userId:Buyer.id })
+                }
+            });
+
+            User.User.update({
+                balance: Buyer.balance - summ
+            },{
+                where:{
+                    id: Buyer.id
+                }
+            })
 
             ProductsInStock.forEach(product => {
                 Product.Product.update({
-                    amount: product.amount - 1
+                    amount: product.amount_on_serv - product.amount
                 },{
                     where:{
                         id: product.id
@@ -191,8 +202,9 @@ class UserController{
                 })
             });
         })
+        const AllShops = await Shop.Shops.findAndCountAll({where:{userId: Buyer.id}})
 
-        //const ProductToBuy = await this.GetUserBasket(req, res, next)
+        res.json(AllShops)
     }
 }
 
