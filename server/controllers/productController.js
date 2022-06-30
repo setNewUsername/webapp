@@ -3,14 +3,42 @@ const ApiError = require("../error/apiError")
 const Uuid = require("uuid")
 const Path = require("path")
 const LangAssocCont = require("./assocContrllers/languageAssocCont")
-
-const {Language} = require("../models/models")
+const SysReq = require("./assocContrllers/platformCharacteristicsCont")
 
 class ProductController{
     //called by GET request; URL: api/product/
-    async GetAll(req, res,){
-        const Products = await Product.Product.findAll()
-        return res.json(Products)
+    async GetAll(req, res, next){
+        try{
+            let {productGenreId, productDeveloperId, productPublisherId, limit, page} = req.query
+            page = page || 1
+            limit = limit || 5
+
+            let offset = page * limit - limit
+
+            let Response = null
+
+            if(productGenreId){
+                Response = await Product.Product.findAll({where:{productGenreId}, limit, offset})
+            }
+            else if(productDeveloperId)
+            {
+                Response = await Product.Product.findAll({where:{productDeveloperId}, limit, offset})
+            }
+            else if(productPublisherId)
+            {
+                Response = await Product.Product.findAll({where:{productPublisherId}, limit, offset})
+            }
+            else
+            {
+                Response = await Product.Product.findAll({limit, offset})
+            }
+
+            return res.json(Response)
+        }
+        catch(e)
+        {
+            return next(ApiError.BadRequest(e.message))
+        }
     }
 
     //called by GET request; URL: api/product/:id
@@ -24,15 +52,12 @@ class ProductController{
                 }
             })
 
-            const ProductLanguages = await Language.LanguageAssociation.findAll({
-                where: {
-                    productId: idToFind
-                }
-            })
+            let Response = JSON.parse(JSON.stringify(product))
 
-            console.log(JSON.parse(JSON.stringify(ProductLanguages))[0])
-
-            return res.json(product)
+            Response[0].languages = await LangAssocCont.GetLanguageNamesByProductId(idToFind)
+            Response[0].systemRequrements = await SysReq.GetSystemRequirementsByProductId(idToFind)
+            
+            return res.json(Response)
         }
         else
         {
@@ -43,21 +68,20 @@ class ProductController{
     //called by POST request; URL: api/product/; form-data: {name, multiplayer, price, productGenreId, productDeveloperId, productPublisherId, image(as file)}
     async Add(req, res, next){
         try{
-            const {name, multiplayer, price, productGenreId, productDeveloperId, productPublisherId, languages} = req.body
+            const {name, multiplayer, price, productGenreId, productDeveloperId, productPublisherId, languages, amount, youtube, systemRequrements} = req.body
 
-            console.log("----------------------------", JSON.parse(languages))
-
-            LangAssocCont.AddAssociations(1, JSON.parse(languages))
-
-            /*console.log(name, multiplayer, price, productGenreId, productDeveloperId, productPublisherId)
+            console.log(name, multiplayer, price, productGenreId, productDeveloperId, productPublisherId, languages, amount, youtube, JSON.parse(systemRequrements))
 
             const {image} = req.files
             const FileName = Uuid.v4() + ".jpg"
             image.mv(Path.resolve(__dirname, "..", "static", FileName))
 
-            const NewProduct = await Product.Product.create({name, multiplayer, price, image:FileName, productGenreId, productDeveloperId, productPublisherId})
+            const NewProduct = await Product.Product.create({name, multiplayer, price, image:FileName, productGenreId, productDeveloperId, productPublisherId, amount, youtube})
 
-            return res.json(NewProduct)*/
+            LangAssocCont.AddAssociations(NewProduct.id, JSON.parse(languages))
+            SysReq.AddSystemRequrements(NewProduct.id, JSON.parse(systemRequrements))
+
+            return res.json(NewProduct)
         }
         catch(e)
         {
