@@ -23,7 +23,6 @@ const Auth = () => {
         user.setIsAuth(true);
     }
 
-
     return (
         <Container className='d-flex justify-content-center align-items-center'
                    style={{height: window.innerHeight}}
