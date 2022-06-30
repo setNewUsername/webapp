@@ -1,5 +1,3 @@
-'use strict'
-
 const LanguageModel = require("../models/languageModel")
 const ApiError = require("../error/apiError")
 
@@ -29,7 +27,7 @@ class LanguageController{
     }
 
     //called by POST request; URL: api/language/; body: {:name":"new_name"}
-    async Add(req, res, next){
+    async Add(req, res){
         const {name} = req.body
         const NewLanguage = await LanguageModel.Language.create({name})
         return res.json(NewLanguage)

@@ -11,7 +11,7 @@ router.get("/", PublisherController.GetAll)
 router.get("/:id", PublisherController.Get)
 
 //add one publisher
-router.post("/", checkRole('ADMIN'), PublisherController.Add)
+router.post("/",checkRole('ADMIN'), PublisherController.Add)
 
 //delete publisher by id
 router.delete("/:id", PublisherController.Delete)
