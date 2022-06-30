@@ -2,6 +2,8 @@ const Router = require("express")
 const router = new Router()
 const PublisherController = require("../controllers/publisherController")
 
+const checkRole = require("../middleware/checkRoleMiddleWare")
+
 //get all publishers
 router.get("/", PublisherController.GetAll)
 
@@ -9,7 +11,7 @@ router.get("/", PublisherController.GetAll)
 router.get("/:id", PublisherController.Get)
 
 //add one publisher
-router.post("/", PublisherController.Add)
+router.post("/",checkRole('ADMIN'), PublisherController.Add)
 
 //delete publisher by id
 router.delete("/:id", PublisherController.Delete)

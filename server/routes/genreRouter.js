@@ -2,6 +2,8 @@ const Router = require("express")
 const router = new Router()
 const GenreController = require("../controllers/genreController")
 
+const checkRole = require("../middleware/checkRoleMiddleWare")
+
 //get all genres
 router.get("/", GenreController.GetAll)
 
@@ -9,7 +11,7 @@ router.get("/", GenreController.GetAll)
 router.get("/:id", GenreController.Get)
 
 //add one ganre
-router.post("/", GenreController.Add)
+router.post("/", checkRole('ADMIN'), GenreController.Add)
 
 //delete ganre by id
 router.delete("/:id", GenreController.Delete)
