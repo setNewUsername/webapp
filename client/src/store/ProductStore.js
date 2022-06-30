@@ -41,8 +41,10 @@ export default class ProductStore {
                 price: 2000
             },
         ]
+        this._game = [];
         this._selectedGenre = {};
-        this._selectedBrand = {};
+        this._selectedDeveloper = {};
+        this._specName = [];
         makeAutoObservable(this);
     }
 
@@ -57,13 +59,19 @@ export default class ProductStore {
     setGames(games) {
         this._games = games;
     }
+    setOneGames(game) {
+        console.log(game);
+        this._game = game;
+        console.log(this._game);
+
+    }
 
     setSelectedGenre(genre) {
         this._selectedGenre = genre;
     }
 
-    setSelectedBrand(brand) {
-        this._selectedBrand = brand;
+    setSelectedDeveloper(brand) {
+        this._selectedDeveloper = brand;
     }
 
     get genres() {
@@ -77,12 +85,22 @@ export default class ProductStore {
     get games() {
         return this._games;
     }
+    get game() {
+        return this._game;
+    }
 
     get selectedGenre() {
         return this._selectedGenre;
     }
 
-    get selectedBrand() {
-        return this._selectedBrand;
+    get selectedDeveloper() {
+        return this._selectedDeveloper;
+    }
+
+    setSpecName(value) {
+        this._specName = value;
+    }
+    get specName() {
+        return this._specName;
     }
 }

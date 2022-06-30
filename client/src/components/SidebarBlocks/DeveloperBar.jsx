@@ -5,8 +5,8 @@ import {observer} from "mobx-react-lite";
 import {ListGroup} from "react-bootstrap";
 
 const developerBar = observer(() => {
-    const context = useContext(Context);
-    const product = context.product;
+
+    const {product} = useContext(Context);
 
     return (
         <ListGroup>
@@ -16,9 +16,9 @@ const developerBar = observer(() => {
                     style={{cursor: "pointer"}}
                     key={brand.id}
                     onClick={() => {
-                        product.setSelectedBrand(brand);
+                        product.setSelectedDeveloper(brand);
                     }}
-                    active={brand.id === product.selectedBrand.id}
+                    active={brand.id === product.selectedDeveloper.id}
                 >
                     {brand.name}
                 </ListGroup.Item>
