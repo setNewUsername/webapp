@@ -32,13 +32,19 @@ Product.Product.belongsTo(Publisher.ProductPublisher)
 Product.Product.hasMany(Language.LanguageAssociation)
 Language.LanguageAssociation.belongsTo(Product.Product)
 
-//shop
+//shop relation to product
 Product.Product.hasMany(Shop.Shops)
 Shop.Shops.belongsTo(Product.Product)
 
+//shop relation to user
+User.User.hasMany(Shop.Shops)
+Shop.Shops.belongsTo(User.User)
+
+//product relation to platform sys req
 Product.Product.hasMany(Platform.PlatformSystemRequirements)
 Platform.PlatformSystemRequirements.belongsTo(Product.Product)
 
+//platform sharacteristics relation to platform sys req
 Platform.PlatformCharacteristics.hasMany(Platform.PlatformSystemRequirements)
 Platform.PlatformSystemRequirements.belongsTo(Platform.PlatformCharacteristics)
 

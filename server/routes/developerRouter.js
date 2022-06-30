@@ -2,6 +2,8 @@ const Router = require("express")
 const router = new Router()
 const DeveloperController = require("../controllers/developerController")
 
+const checkRole = require("../middleware/checkRoleMiddleWare")
+
 //get all developers
 router.get("/", DeveloperController.GetAll)
 
@@ -9,7 +11,7 @@ router.get("/", DeveloperController.GetAll)
 router.get("/:id", DeveloperController.Get)
 
 //add one developer
-router.post("/", DeveloperController.Add)
+router.post("/",checkRole('ADMIN'), DeveloperController.Add)
 
 //delete developer by id
 router.delete("/:id", DeveloperController.Delete)

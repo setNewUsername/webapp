@@ -11,7 +11,7 @@ router.get("/", ProductController.GetAll)
 router.get("/:id", ProductController.Get)
 
 //add one product
-router.post("/",checkRole('ADMIN'),  ProductController.Add)
+router.post("/",checkRole('ADMIN'), ProductController.Add)
 
 //delete product by id
 router.delete("/:id", ProductController.Delete)
