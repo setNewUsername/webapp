@@ -182,6 +182,14 @@ class UserController{
                     let a_key = Uuid.v4()
                     Shop.Shops.create({ activation_key:a_key, productId:product.id, userId:Buyer.id })
                 }
+                if(product.amount_on_serv > 0)
+                {
+                    console.log("------------------------", UserBasket.id,product.id)
+                    Basket.BasketAssoc.destroy({where:{
+                        basketId:UserBasket.id,
+                        productId:product.id
+                    }})
+                }
             });
 
             User.User.update({
@@ -205,6 +213,18 @@ class UserController{
         const AllShops = await Shop.Shops.findAndCountAll({where:{userId: Buyer.id}})
 
         res.json(AllShops)
+    }
+
+    async AddToBasket(req, res, next){
+        const {productId} = req.body
+        const token = req.headers.authorization.split(' ')[1]
+        const decoded = jwt.verify(token, process.env.SECRET_KEY)
+
+        const UserBasket = await Basket.Basket.findOne({where: {userId:decoded.id}})
+        
+        console.log(UserBasket.id, productId)
+        const NewBasketAssoc = await Basket.BasketAssoc.create({basketId:UserBasket.id, productId})
+        return res.json(NewBasketAssoc)
     }
 }
 

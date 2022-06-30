@@ -15,6 +15,8 @@ router.get("/", checkRole('ADMIN'), UserController.GetUsers)
 //get user basket; jwt required
 router.get("/basket", authMiddleWare, UserController.GetUserBasket)
 
+router.post("/addtobasket", authMiddleWare, UserController.AddToBasket)
+
 router.post("/makeshop",authMiddleWare, UserController.MakePurchase)
 
 //delete user by id
