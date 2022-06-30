@@ -3,6 +3,9 @@ const {User} = require("../models/models")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const {Basket} = require("../models/models")
+const {Product} = require("../models/models")
+const {Shop} = require("../models/models")
+const Uuid = require("uuid")
 
 const GenerateGWT = (id, email, role) => {
     return jwt.sign({id, email, role}, process.env.SECRET_KEY, {expiresIn: '24h'}) 
@@ -63,6 +66,119 @@ class UserController{
     {
         const Users = await User.User.findAll()
         return res.json(Users)
+    }
+
+    async GetUserBasket(req, res, next){
+        const token = req.headers.authorization.split(' ')[1]
+        const decoded = jwt.verify(token, process.env.SECRET_KEY)
+
+        const UserBasket = await Basket.Basket.findOne({where: {userId:decoded.id}})
+
+        const BasketAssoc = await Basket.BasketAssoc.findAll({where: {basketId: UserBasket.id}})
+
+        let Products = []
+
+        BasketAssoc.forEach(element => {
+            let product = Product.Product.findOne({where: {id: element.productId}})
+            Products.push(product)
+        });
+
+        BasketAssoc.forEach(element => {
+            let product = Product.Product.findOne({where: {id: element.productId}})
+            Products.push(product)
+        });
+
+        return Promise.all(Products).then(value=>{
+            return res.json(value)
+        })
+    }
+
+    async MakePurchase(req, res, next){
+        const token = req.headers.authorization.split(' ')[1]
+        const decoded = jwt.verify(token, process.env.SECRET_KEY)
+        
+        const Buyer = await User.User.findOne({where:{id:decoded.id}})
+        const UserBasket = await Basket.Basket.findOne({where: {userId:decoded.id}})
+
+        const BasketAssoc = await Basket.BasketAssoc.findAll({where: {basketId: UserBasket.id}})
+
+        let Products = []
+
+        BasketAssoc.forEach(element => {
+            let product = Product.Product.findOne({where: {id: element.productId}})
+            Products.push(product)
+        });
+
+        Promise.all(Products).then(value=>{
+            let ProductsInStock = []
+            let UniqueIds = []
+
+            value.forEach(product => {
+                UniqueIds.push(product.id)
+            });
+            
+            UniqueIds = UniqueIds.filter((val, ind, arr) => arr.indexOf(val) === ind);
+
+            for (let i = 0; i < UniqueIds.length; i++) {
+                ProductsInStock.push({})
+                ProductsInStock[i].id = UniqueIds[i]
+                ProductsInStock[i].amount = 0
+                ProductsInStock[i].price = 0
+                ProductsInStock[i].amount_on_serv = 0
+            }
+
+            for (let i = 0; i < ProductsInStock.length; i++) {
+                for (let m = 0; m < value.length; m++) {
+                    if(ProductsInStock[i].id == value[m].id){
+                        if(ProductsInStock[i].amount < value[m].amount)
+                        {
+                            ProductsInStock[i].amount += 1
+                            ProductsInStock[i].price += value[m].price
+                        }
+                        ProductsInStock[i].amount_on_serv = value[m].amount
+                    }
+                }
+            }
+
+            let summ = 0
+            ProductsInStock.forEach(product => {
+                summ += product.amount * product.price
+            });
+            console.log(Buyer.balance)
+            console.log(summ)
+            if(Buyer.balance < summ)
+            {
+                return next(ApiError.BadRequest("Not enough maney"))
+            }
+
+            ProductsInStock.forEach(product => {
+                for(let i = 0; i < product.amount; i++){
+                    let a_key = Uuid.v4()
+                    Shop.Shops.create({ activation_key:a_key, productId:product.id, userId:Buyer.id })
+                }
+            });
+
+            User.User.update({
+                balance: Buyer.balance - summ
+            },{
+                where:{
+                    id: Buyer.id
+                }
+            })
+
+            ProductsInStock.forEach(product => {
+                Product.Product.update({
+                    amount: product.amount_on_serv - product.amount
+                },{
+                    where:{
+                        id: product.id
+                    }
+                })
+            });
+        })
+        const AllShops = await Shop.Shops.findAndCountAll({where:{userId: Buyer.id}})
+
+        res.json(AllShops)
     }
 }
 
