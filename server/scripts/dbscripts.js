@@ -161,7 +161,7 @@ async function FillSystemChars()
 }
 
 module.exports = {
-    FillDB: () => {/*
+    FillDB: () => {
         FillProductDev()
         FillProductPublishers()
         FillProductLanguages()
@@ -170,7 +170,7 @@ module.exports = {
         FillProducts()
         FillSystemRequrements()
         FillLangAssoc()
-        CreateBaskets()*/
+        CreateBaskets()
         FillSystemChars()
     }
 }
