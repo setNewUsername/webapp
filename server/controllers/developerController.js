@@ -27,8 +27,13 @@ class DeveloperController{
     }
 
     //called by POST request; URL: api/developer/; body: {:name":"new_name"}
-    async Add(req, res){
+    async Add(req, res, next){
         const {name} = req.body
+        const Candidate = await DeveloperModel.ProductDeveloper.findOne({where:{name}})
+        if(Candidate)
+        {
+            return next(ApiError.BadRequest("developer already exists"))
+        }
         const Developer = await DeveloperModel.ProductDeveloper.create({name})
         return res.json(Developer)
     }

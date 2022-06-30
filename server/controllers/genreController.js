@@ -27,8 +27,13 @@ class GenreController{
     }
 
     //called by POST request; URL: api/genre/; body: {:name":"new_name"}
-    async Add(req, res){
+    async Add(req, res, next){
         const {name} = req.body
+        const Candidate = await GenreModel.ProductGenre.findOne({where:{name}})
+        if(Candidate)
+        {
+            return next(ApiError.BadRequest("genre already exists"))
+        }
         const NewGenre = await GenreModel.ProductGenre.create({name})
         return res.json(NewGenre)
     }

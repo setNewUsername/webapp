@@ -27,8 +27,13 @@ class LanguageController{
     }
 
     //called by POST request; URL: api/language/; body: {:name":"new_name"}
-    async Add(req, res){
+    async Add(req, res, next){
         const {name} = req.body
+        const Candidate = await LanguageModel.Language.findOne({where:{name}})
+        if(Candidate)
+        {
+            return next(ApiError.BadRequest("language already exists"))
+        }
         const NewLanguage = await LanguageModel.Language.create({name})
         return res.json(NewLanguage)
     }

@@ -26,7 +26,7 @@ app.use(fileUpload({}))
 app.use('/api', router)
 //app creation and base routing
 
-//DBTestFill.FillDB();
+DBTestFill.FillDB();
 
 //error handling
 app.use(errorHandler)

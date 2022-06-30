@@ -13,7 +13,7 @@ const GenerateGWT = (id, email, role) => {
 
 class UserController{
     async Registrate(req, res, next){
-        const {email, password, access_rights} = req.body
+        const {email, password, role} = req.body
         
         if(!email || !password){
             return next(ApiError.BadRequest("no email or password"))
@@ -24,7 +24,7 @@ class UserController{
             return next(ApiError.BadRequest("user already exists"))
         }
         const hashPass = await bcrypt.hash(password, 5)
-        const NewUser = await User.User.create({email, password: hashPass, access_rights})
+        const NewUser = await User.User.create({email, password: hashPass, role})
 
         const NewBasket = await Basket.Basket.create({userId: NewUser.id})
 
