@@ -3,7 +3,7 @@ require("dotenv").config()
 //importing modules
 const express = require("express")
 const sequelize = require("./dbConnection")
-const models = require("./models/models")
+//const models = require("./models/models")
 const fileUpload = require("express-fileupload")
 const cors = require("cors")
 const router = require('./routes/index')
@@ -26,7 +26,7 @@ app.use(fileUpload({}))
 app.use('/api', router)
 //app creation and base routing
 
-DBTestFill.FillDB()
+//DBTestFill.FillDB()
 
 //error handling
 app.use(errorHandler)

@@ -151,6 +151,15 @@ async function CreateBaskets(){
     });
 }
 
+async function FillSystemChars()
+{
+    let Chars = ['GPU', 'CPU', 'Windows', 'Disk space', 'RAM']
+
+    Chars.forEach(char => {
+        Models.Platform.PlatformCharacteristics.create({name:char})
+    });
+}
+
 module.exports = {
     FillDB: () => {/*
         FillProductDev()
@@ -162,5 +171,6 @@ module.exports = {
         FillSystemRequrements()
         FillLangAssoc()
         CreateBaskets()*/
+        FillSystemChars()
     }
 }
