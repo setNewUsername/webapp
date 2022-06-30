@@ -3,6 +3,8 @@ import {Button, Card, Col, Container, Image, Row, Tab, Table, Tabs} from "react-
 
 const ProductPage = () => {
 
+
+    //FIXME: Рефактор, выделить сист требования в отдельную компоненту
     const product = {
         id: 1,
         name: 'Mortal Kombat XL',
@@ -13,11 +15,11 @@ const ProductPage = () => {
         price: 2000,
         youtube: '5qap5aO4i9A',
         systemCharacteristics: [
-            {id: 1, title: 'Операционная система', description: 'Windows'},
-            {id: 2, title: 'Оперативная память', description: '10'},
-            {id: 3, title: 'Процессор', description: 'm1'},
-        ]
-    }
+                { id: 1, title: 'Видеокарта', min: 'AMD rx770', req: 'Ffdffd'},
+                { id: 2, title: 'Оперативная память', min: '8 Gb', req: 'fdfsdf'},
+                { id: 3,  title: 'Процессор', min: 'Intel i7', req: '423423'},
+            ],
+        }
 
     return (
         <Container>
@@ -54,7 +56,8 @@ const ProductPage = () => {
                                 {product.description}
                             </Col>
                             <Col md={6}>
-                                <iframe width="560" height="315" src={"https://www.youtube.com/embed/"+product.youtube}
+                                <iframe width="560" height="315"
+                                        src={"https://www.youtube.com/embed/" + product.youtube}
                                         title="YouTube video player" frameBorder="0"
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                         allowFullScreen></iframe>
@@ -63,16 +66,29 @@ const ProductPage = () => {
                     </Tab>
                     <Tab eventKey="spec" title="Системные требования">
                         <div>
+                            <h4>Минимальные системные требования</h4>
                             <Table striped bordered hover>
                                 <tbody>
                                 {product.systemCharacteristics.map(info =>
                                     <tr key={info.id}>
                                         <td>{info.title}</td>
-                                        <td>{info.description}</td>
+                                        <td>{info.min}</td>
                                     </tr>
                                 )}
                                 </tbody>
                             </Table>
+                            <h4>Рекомендованные системные требования</h4>
+                            <Table striped bordered hover>
+                                <tbody>
+                                {product.systemCharacteristics.map(info =>
+                                    <tr key={info.id}>
+                                        <td>{info.title}</td>
+                                        <td>{info.req}</td>
+                                    </tr>
+                                )}
+                                </tbody>
+                            </Table>
+
                         </div>
                     </Tab>
                 </Tabs>
