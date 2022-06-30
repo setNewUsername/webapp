@@ -1,8 +1,6 @@
 import {$authHost, $host} from './index';
 
 export const createGenre = async (name) => {
-    console.log(name);
-    console.log(JSON.stringify(name));
     const {data} = await $authHost.post('/api/genre', name);
     return data;
 }
