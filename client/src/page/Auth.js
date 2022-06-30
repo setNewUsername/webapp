@@ -28,8 +28,6 @@ const Auth = () => {
         } catch (e) {
             alert(e.response.data.message);
         }
-
-
     }
 
     return (

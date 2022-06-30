@@ -3,7 +3,7 @@ import {Col, Container, Row} from "react-bootstrap";
 import Sidebar from "../components/Sidebar";
 import ProductList from "../components/ProductList";
 import {observer} from "mobx-react-lite";
-import {fetchDeveloper, fetchGenre} from "../http/productAPI";
+import {fetchDeveloper, fetchGenre, fetchProduct} from "../http/productAPI";
 import {Context} from "../index";
 
 const Shop = observer(() => {
@@ -11,7 +11,8 @@ const Shop = observer(() => {
 
     useEffect(() => {
         fetchGenre().then(data => product.setGenres(data))
-        fetchDeveloper().then(data => product.setdeveloper(data))
+        fetchDeveloper().then(data => product.setDeveloper(data))
+        fetchProduct().then(data => product.setGames(data))
     }, [])
 
 

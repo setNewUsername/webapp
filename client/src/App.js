@@ -12,9 +12,11 @@ const App = observer(() => {
     const {user} = useContext(Context);
     const [loading, setLoading] = useState(true);
 
+    //FIXME: Проверка авторизации
     useEffect(() => {
         setTimeout(() => {
             check().then(data => {
+                console.log(data)
                 user.setUser(true);
                 user.setIsAuth(true);
             }).finally(()=> setLoading(false))

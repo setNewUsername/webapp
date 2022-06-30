@@ -7,7 +7,7 @@ const checkRole = require("../middleware/checkRoleMiddleWare")
 
 router.post("/registration", UserController.Registrate)
 router.post("/login", UserController.Login)
-router.get("/auth", authMiddleWare, UserController.Authorizate)
+router.get("/auth", authMiddleWare, UserController.check)
 
 //get list of users
 router.get("/", UserController.GetUsers)

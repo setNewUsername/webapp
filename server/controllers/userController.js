@@ -45,7 +45,7 @@ class UserController{
         
         return res.json(GenerateGWT(user.id, user.email, user.role))
     }
-    async Authorizate(req, res, next){
+    async check(req, res, next){
         return res.json(GenerateGWT(req.user.id, req.user.email, req.user.role))
     }
     async Delete(req, res){

@@ -50,7 +50,7 @@ export default class ProductStore {
         this._genres = genres;
     }
 
-    setdeveloper(developer) {
+    setDeveloper(developer) {
         this._developer = developer;
     }
 
