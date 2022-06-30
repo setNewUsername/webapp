@@ -1,27 +1,26 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Button, Card, Container, Form} from "react-bootstrap";
 import {NavLink, useLocation} from "react-router-dom";
 import {LOGIN_ROUTE, REGISTRATION_ROUTE} from "../utils/consts";
 import {login, registration} from "../http/userAPI";
+import {Context} from "../index";
 
 const Auth = () => {
 
+    const {user} = useContext(Context);
     const location = useLocation();
     const isLogin = location.pathname === LOGIN_ROUTE;
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const onSubmit = async () => {
+        let data;
         if (isLogin) {
-            const response = await login(email, password);
-            console.log('login');
-            console.log(response);
+            data = await login(email, password);
         } else {
-            const response = await registration(email, password);
-            debugger
-            console.log('Регистрация');
-            console.log(response);
+            data = await registration(email, password);
         }
+        user.setIsAuth(true);
     }
 
 
